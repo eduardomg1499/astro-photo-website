@@ -493,3 +493,61 @@ body {
     background-color: var(--accent-color);
     transform: scale(1.1);
 }
+
+/* =================================================================== */
+/* ===== ESTILOS PARA DISPOSITIVOS MÓVILES (DISEÑO RESPONSIVO) ===== */
+/* =================================================================== */
+
+/* Se aplicará a pantallas con un ancho máximo de 768px (tablets y móviles) */
+@media (max-width: 768px) {
+
+    /* --- Arreglo para el Encabezado (Header) --- */
+    /* Esto soluciona el problema del título y los enlaces amontonados. */
+    .main-header {
+        /* Cambia la dirección del layout a vertical */
+        flex-direction: column;
+        /* Centra los elementos */
+        align-items: center;
+        /* Añade espacio entre el logo y los enlaces de navegación */
+        gap: 1rem;
+        /* Añade un poco de padding para que no se pegue a los bordes */
+        padding-top: 1.5rem;
+        padding-bottom: 1rem;
+    }
+
+    /* --- Arreglo para el Título y Estadísticas de la Imagen --- */
+    /* Esto soluciona el problema del título que desaparece y lo organiza mejor. */
+    .single-post-title {
+        /* Centra el título de la foto */
+        text-align: center;
+        /* Ajusta el tamaño para que sea legible en móviles */
+        font-size: 2.5rem; 
+    }
+
+    .post-date {
+        /* Centra la fecha */
+        text-align: center;
+    }
+    
+    .post-meta {
+        /* Centra el contenedor de las estadísticas */
+        justify-content: center;
+        /* Añade espacio arriba para separarlo de la fecha */
+        margin-top: 1rem;
+    }
+
+    .post-stats {
+        /* Permite que los contadores se envuelvan si no caben en una línea */
+        flex-wrap: wrap;
+        /* Centra los contadores */
+        justify-content: center;
+        /* Añade espacio entre los contadores si se envuelven */
+        gap: 0.5rem 1rem;
+    }
+
+    /* --- Ajuste General del Contenedor --- */
+    .container {
+        /* Reduce el padding en los lados para dar más espacio en móviles */
+        padding: 1rem;
+    }
+}
