@@ -502,54 +502,71 @@ body {
 
     /* --- Arreglo para el Encabezado Principal --- */
     .main-header {
-        /* Cambia la dirección a vertical para apilar logo y menú */
         flex-direction: column;
         align-items: center;
-        gap: 1rem; /* Espacio entre el logo y el menú */
+        gap: 1rem;
         padding-top: 1.5rem;
         padding-bottom: 1.5rem;
     }
-    
     .main-header .logo {
-        /* Hacemos el logo un poco más pequeño en móviles */
         font-size: 1.8rem;
     }
-    
     .main-header nav {
-        /* El nav interno también necesita ajustarse */
         flex-direction: column;
         gap: 1rem;
     }
 
+    /* ===== NUEVO: Arreglo para el Hero de Portada ===== */
+    .hero h1 {
+        /* Reducimos drásticamente el tamaño de la fuente en móviles */
+        font-size: 3rem;
+        line-height: 1.2; /* Mejora el espaciado entre líneas */
+    }
+    /* ================================================= */
+
+    /* ===== NUEVO: Arreglo para la Sección "Sobre Mí" ===== */
+    .about-container {
+        /* Cambiamos el grid a una sola columna */
+        grid-template-columns: 1fr;
+        /* Centramos los elementos (foto y texto) */
+        justify-items: center;
+        text-align: center; /* Centramos el texto para que se vea mejor */
+    }
+
+    .about-photo {
+        /* Hacemos la foto de perfil un poco más pequeña */
+        width: 150px;
+        height: 150px;
+    }
+
+    .about-text h2 {
+        /* Ajustamos el tamaño del título "Sobre Mí" */
+        font-size: 2rem;
+    }
+    /* ======================================================= */
+
     /* --- Arreglo para el Título y Estadísticas de la Imagen --- */
     .single-post-title {
-        /* Hacemos el título de la foto más pequeño y centrado */
         font-size: 2.2rem;
         text-align: center;
     }
-
     .post-date {
-        /* Centramos la fecha */
         text-align: center;
     }
-    
     .post-meta {
-        /* Apilamos y centramos las estadísticas */
         flex-direction: column;
         align-items: center;
-        gap: 0.5rem; /* Espacio entre contadores */
+        gap: 0.5rem;
     }
 
     /* --- Ajuste General del Contenedor --- */
     .container {
-        /* Reducimos el padding lateral para ganar espacio */
         padding-left: 1rem;
         padding-right: 1rem;
     }
     
     /* --- Ajuste para el slider de comparación --- */
     .viewer-main-display {
-        /* Usamos una relación de aspecto más vertical para móviles */
         aspect-ratio: 4 / 5;
     }
 }
