@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroDeepCoffe by Eduardo MG</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <nav>
+            <a href="index.html" class="logo">AstroDeepCoffe</a>
+            <ul>
+                <li><a href="galeria.html?tipo=profundo">Espacio Profundo</a></li>
+                <li><a href="galeria.html?tipo=planetaria">Planetaria</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="hero" style="background-image: url('img/Elephant_Final_HOO_VF.png');">
+            <div class="hero-content">
+                 <h1>AstroDeepCoffe by Eduardo MG</h1>
+                <p>Capturando el Cosmos</p>
+            </div>
+        </div>
+
+        <div class="gallery-links">
+            <a href="galeria.html?tipo=profundo" class="gallery-link-card" id="deep-space-card">
+                <div class="card-content">
+                    <h2>Espacio Profundo</h2>
+                    <p>Galaxias, Nebulosas...</p>
+                </div>
+            </a>
+            <a href="galeria.html?tipo=planetaria" class="gallery-link-card" id="planetary-card">
+                <div class="card-content">
+                    <h2>Planetaria</h2>
+                    <p>Planetas, Luna...</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- --- Sección Sobre Mí --- -->
+        <section class="about-section">
+            <div class="about-container">
+                <img src="img/profile.jpg" alt="Tu Nombre" class="about-photo">
+                <div class="about-text">
+                    <h2>Sobre Mí</h2>
+                    <p>
+                        ¡Hola! Soy Eduardo, un apasionado de la astronomía y la fotografía. Desde que era niño, el cielo nocturno me ha fascinado, y este sitio es el resultado de incontables horas bajo las estrellas, intentando capturar una pequeña fracción de su inmensa belleza. ¡Espero que disfrutes del viaje!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- Sección Mi Equipo --- -->
+        <section class="setup-section">
+            <h2 class="section-title">Mi Equipo</h2>
+            <div class="setup-grid">
+                <div class="setup-item">
+                    <img src="img/setup-telescope.jpg" alt="Telescopio">
+                    <div class="setup-item-info">
+                        <h3>Telescopio Principal</h3>
+                        <p>Askar FRA 400</p>
+                    </div>
+                </div>
+                <div class="setup-item">
+                    <img src="img/setup-telescope-2.jpg" alt="Telescopio Secundario">
+                    <div class="setup-item-info">
+                        <h3>Telescopio Secundario</h3>
+                        <p>Aquí va el nombre de tu otro telescopio</p>
+                    </div>
+                </div>
+                <div class="setup-item">
+                    <img src="img/setup-camera.jpg" alt="Cámara">
+                    <div class="setup-item-info">
+                        <h3>Cámara Principal</h3>
+                        <p>SVBONY 405c</p>
+                    </div>
+                </div>
+                <div class="setup-item">
+                    <img src="img/setup-mount.jpg" alt="Montura">
+                    <div class="setup-item-info">
+                        <h3>Montura</h3>
+                        <p>Sky-Watcher EQM35 PRO</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 AstroDeepCoffe by Eduardo MG. Todos los derechos reservados. Visitas a esta página: <span id="index-view-counter">Cargando...</span></p>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

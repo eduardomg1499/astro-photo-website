@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - AstroDeepCoffe</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <nav>
+            <a href="index.html" class="logo">AstroDeepCoffe</a>
+            <ul>
+                <li><a href="galeria.html?tipo=profundo">Espacio Profundo</a></li>
+                <li><a href="galeria.html?tipo=planetaria">Planetaria</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1 id="gallery-title"></h1>
+        <div id="gallery-grid" class="gallery-grid">
+            <!-- Las imágenes se cargarán aquí con JavaScript -->
+        </div>
+        <!-- --- NUEVO: Contenedor para la paginación --- -->
+        <nav aria-label="Navegación de la galería">
+            <ul id="pagination-controls" class="pagination">
+                <!-- Los controles se generarán aquí con JavaScript -->
+            </ul>
+        </nav>
+    </main>
+
+    <footer>
+        <p>© 2024 AstroDeepCoffe. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

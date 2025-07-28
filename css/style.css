@@ -1,0 +1,495 @@
+/* css/style.css */
+:root {
+    --bg-color: #0a0a0a;
+    --text-color: #e6e6e6;
+    --header-bg: #161616;
+    --card-bg: #1c1c1c;
+    --border-color: #2f2f2f;
+    --accent-color: #00aaff;
+    --font-family: 'Exo 2', sans-serif;
+}
+
+/* --- NUEVO: FUENTE PERSONALIZADA --- */
+/*
+   Instrucciones:
+   1. Descarga la fuente "Miami Sunday" desde dafont.com
+   2. Crea una carpeta llamada 'fonts' en la raíz de tu proyecto.
+   3. Coloca el archivo de la fuente (ej. MiamiSunday.otf) dentro de la carpeta 'fonts'.
+*/
+@font-face {
+    font-family: 'Miami Sunday';
+    src: url('../fonts/MiamiSunday.otf') format('opentype');
+}
+
+/* --- NUEVO: FUENTE PARA EL LOGO --- */
+@font-face {
+    font-family: 'Adam-Bold';
+    src: url('../fonts/Adam-Bold.ttf') format('truetype');
+}
+
+/* --- NUEVO: Animación Ken Burns para la imagen de portada --- */
+@keyframes kenburns {
+    0% {
+        transform: scale(1) translate(0, 0);
+    }
+    100% {
+        /* Un zoom y paneo muy sutiles */
+        transform: scale(1.1) translate(-2%, 1%);
+    }
+}
+
+/* --- NUEVO: Animación Fade-in para la galería --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+/* Header, Hero, Galería, etc. se mantienen sin cambios */
+.main-header { background-color: var(--header-bg); border-bottom: 1px solid var(--border-color); padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000; }
+.main-header nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+.main-header .logo { font-family: 'Miami Sunday', sans-serif; font-size: 2.2rem; font-weight: normal; color: var(--text-color); text-decoration: none; }
+.main-header nav ul { list-style: none; display: flex; gap: 1.5rem; }
+.main-header nav a { color: var(--text-color); text-decoration: none; font-size: 1rem; transition: color 0.3s ease; }
+.main-header nav a:hover { color: var(--accent-color); }
+
+/* --- Hero Section con efecto Ken Burns --- */
+.hero {
+    position: relative;
+    aspect-ratio: 16 / 9; /* NUEVO: Relación de aspecto 16:9 */
+    max-height: 85vh; /* Límite para que no sea demasiado alto en pantallas verticales */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    background-size: cover;
+    background-position: center center;
+    overflow: hidden; /* Esencial para que el efecto de movimiento funcione bien */
+}
+.hero::after {
+    /* --- NUEVO: Degradado para transición suave --- */
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px; /* Altura del degradado */
+    background: linear-gradient(to top, var(--bg-color), transparent);
+}
+.hero::before { /* Capa para aplicar la animación sin afectar el contenido */
+    content: '';
+    position: absolute;
+    inset: -5%; /* Un poco más grande para evitar bordes blancos durante la animación */
+    background: inherit; /* Hereda el background-image del .hero */
+    animation: kenburns 40s ease-in-out infinite alternate;
+}
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+    /* Se elimina el recuadro y se añade un degradado sutil para mejorar la legibilidad */
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 75%);
+}
+.hero h1 {
+    font-family: 'Miami Sunday', sans-serif; /* Fuente cambiada a Miami Sunday */
+    font-size: 5rem; /* Tamaño aumentado para la nueva fuente */
+    font-weight: normal; /* Las fuentes script no suelen necesitar negrita */
+    margin-bottom: 0.5rem;
+    /* Sombra de texto más pronunciada y suave para destacar */
+    text-shadow: 0px 2px 15px rgba(0,0,0,0.9);
+}
+.hero p {
+    font-size: 1.2rem;
+    /* Sombra de texto ajustada para consistencia */
+    text-shadow: 0px 1px 8px rgba(0,0,0,0.9);
+}
+
+.gallery-links { display: flex; justify-content: center; gap: 2rem; padding: 3rem 1rem; }
+/* --- ACTUALIZADO: Estilos para tarjetas de galería con fondo dinámico --- */
+.gallery-link-card {
+    width: 300px; height: 200px; border: 1px solid var(--border-color); border-radius: 8px; display: flex; justify-content: center; align-items: center; text-align: center; text-decoration: none; color: var(--text-color); transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden; /* Para que el overlay no se salga */
+}
+.gallery-link-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(10, 10, 10, 0.7); /* Overlay más oscuro para mejorar contraste */
+    transition: background-color 0.3s ease;
+}
+.gallery-link-card:hover::after { background-color: rgba(10, 10, 10, 0.4); }
+.gallery-link-card .card-content { position: relative; z-index: 2; } /* Contenido por encima del overlay */
+.gallery-link-card:hover { transform: translateY(-10px) scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+.gallery-link-card h2 { font-size: 2rem; margin-bottom: 0.5rem; font-family: 'Miami Sunday', sans-serif; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); }
+.gallery-link-card .card-content p { text-shadow: 1px 1px 4px rgba(0,0,0,0.8); }
+#gallery-title { text-align: center; font-size: 2.5rem; margin-bottom: 2rem; text-transform: capitalize; }
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; }
+.gallery-item {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 4px;
+    aspect-ratio: 1 / 1;
+    background-color: #111;
+    opacity: 0; /* Inicia transparente para que el fade-in funcione */
+    animation: fadeIn 0.5s ease-out forwards;
+}
+.gallery-item:nth-child(1) { animation-delay: 0.05s; }
+.gallery-item:nth-child(2) { animation-delay: 0.1s; }
+.gallery-item:nth-child(3) { animation-delay: 0.15s; }
+.gallery-item:nth-child(4) { animation-delay: 0.2s; }
+.gallery-item:nth-child(5) { animation-delay: 0.25s; }
+.gallery-item:nth-child(6) { animation-delay: 0.3s; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.gallery-item:hover img { transform: scale(1.05); }
+.photo-info { position: absolute; bottom: 0; left: 0; right: 0; color: white; padding: 3rem 1.5rem 1.5rem; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, transparent 100%); text-decoration: none; display: flex; flex-direction: column-reverse; }
+.photo-info h3 { font-size: 1.8rem; font-weight: 700; line-height: 1.2; color: #fff; margin: 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.7); }
+.photo-info .date { font-size: 0.8rem; font-weight: 400; color: #ccc; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+
+
+/* --- NUEVO: Sección "Sobre Mí" y "Setup" --- */
+.about-section {
+    padding: 4rem 2rem;
+    background-color: var(--header-bg); /* Un fondo ligeramente diferente */
+    border-top: 1px solid var(--border-color);
+}
+.about-container {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+.about-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--border-color);
+}
+.about-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+    font-family: 'Miami Sunday', sans-serif;
+}
+.about-text p {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.setup-section {
+    padding: 4rem 2rem;
+}
+.section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 3rem;
+}
+.setup-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.setup-item {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.setup-item img { width: 100%; height: 220px; object-fit: cover; }
+.setup-item-info { padding: 1.5rem; }
+.setup-item-info h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.setup-item-info p { color: #b0b0b0; }
+
+/* --- NUEVO ESTILO: PÁGINA DE DETALLE TIPO "POST" --- */
+.single-post-container {
+    max-width: 840px;
+    margin: 2rem auto;
+}
+
+.single-post-title {
+    font-size: 3rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--text-color); /* Color cambiado a blanco */
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    font-family: 'Miami Sunday', sans-serif; /* Nueva fuente aplicada */
+}
+
+.post-date {
+    font-size: 0.9rem;
+    color: #8b949e;
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.post-description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+}
+
+/* --- ESTILOS DE LA FICHA TÉCNICA (MANTENIDOS Y AJUSTADOS) --- */
+.tech-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    margin: 0 auto;
+}
+.tech-card h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    text-align: center;
+    font-size: 1.8rem;
+}
+.tech-card ul { list-style: none; }
+.tech-card li { margin-bottom: 1rem; }
+.tech-card li strong {
+    color: var(--accent-color);
+    display: block;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* --- NUEVO: Estilos de Paginación --- */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+}
+.pagination li a {
+    color: var(--text-color);
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 1.25rem;
+    margin: 0 0.25rem;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    display: block;
+}
+.pagination li a:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+}
+.pagination li.active a {
+    background-color: var(--accent-color);
+    color: #fff;
+    border-color: var(--accent-color);
+    cursor: default;
+}
+.pagination li.disabled a {
+    color: #555;
+    background-color: #222;
+    cursor: not-allowed;
+    pointer-events: none; /* Evita clics en el enlace deshabilitado */
+}
+
+
+/* --- MODAL DE PANTALLA COMPLETA (sin cambios) --- */
+.fullscreen-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); display: none; justify-content: center; align-items: center; z-index: 2000; }
+.fullscreen-modal.active { display: flex; }
+.fullscreen-modal .content { width: 95%; height: 95%; position: relative; }
+.fullscreen-modal .content img { cursor: grab; }
+.fullscreen-modal .close-btn { position: absolute; top: -15px; right: -10px; background: white; color: black; border: none; width: 30px; height: 30px; border-radius: 50%; font-size: 1.5rem; font-weight: bold; cursor: pointer; z-index: 2001; }
+
+/* --- NUEVO: Estilos para el Modal de Edición en Admin --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 2rem;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    padding: 2rem 2.5rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    border: 1px solid var(--border-color);
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 2.5rem;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+.modal-close-btn:hover { opacity: 1; }
+
+.modal-content h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--accent-color);
+}
+
+.modal-content .form-group small {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* --- NUEVO: Estilos para el Visor de Imágenes --- */
+.post-viewer {
+    margin-bottom: 1.5rem;
+}
+.viewer-main-display {
+    position: relative; /* Necesario para posicionar el botón de descarga */
+    width: 100%;
+    background-color: #000;
+    border-radius: 4px;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.viewer-main-display img,
+.viewer-main-display video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.viewer-controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+    pointer-events: none; /* Para que no interfiera con el click en la imagen */
+}
+.control-button {
+    background-color: rgba(28, 28, 28, 0.7);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    line-height: 1;
+    font-family: var(--font-family);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    pointer-events: all; /* Reactivar eventos para los botones */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.control-button:hover { background-color: var(--border-color); }
+
+.viewer-thumbnails {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem; /* Espacio para la barra de scroll */
+}
+.thumb-item {
+    flex: 0 0 100px; /* No crece, no se encoge, base de 100px */
+    height: 65px;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+.thumb-item.active { border-color: var(--accent-color); }
+.thumb-item img { width: 100%; height: 100%; object-fit: cover; }
+
+/* --- NUEVO: Estilos para Acciones (Descarga) --- */
+.post-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.download-counter { color: #8b949e; font-size: 0.9rem; }
+
+/* --- NUEVO: Estilo para el botón de descarga superpuesto --- */
+.viewer-download-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10;
+    background-color: rgba(28, 28, 28, 0.7);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.viewer-download-btn:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.1);
+}

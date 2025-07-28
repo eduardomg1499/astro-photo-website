@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Subir Nueva Foto</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Estilos adicionales para el formulario de admin */
+        .admin-header { display: flex; justify-content: space-between; align-items: center; }
+        .logout-btn {
+            text-decoration: none;
+            background-color: var(--border-color);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px; }
+        .admin-container { max-width: 800px; margin: 4rem auto; padding: 2rem; background-color: var(--card-bg); border-radius: 8px; }
+        .admin-container h1 { text-align: center; margin-bottom: 2rem; color: var(--accent-color); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            border-radius: 4px;
+            font-family: var(--font-family);
+        }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .tech-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; background-color: var(--bg-color); padding: 1rem; border-radius: 4px; border: 1px solid var(--border-color); }
+        .tech-details-grid .tech-input label { font-size: 0.9rem; color: #aaa; }
+        .tech-details-grid .tech-input input { background-color: #2a2a2a; }
+        .form-group > label { font-size: 1.2rem; margin-bottom: 1rem; }
+
+        /* --- NUEVO: Estilos para la lista de gestión --- */
+        #photo-list .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        #photo-list .edit-btn {
+            background-color: #2980b9; /* Azul */
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #photo-list .edit-btn:hover { background-color: #3498db; }
+
+        .manage-container { margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 2rem; }
+        #photo-list { list-style: none; padding: 0; }
+        #photo-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        #photo-list .delete-btn {
+            background-color: #c0392b; /* Rojo para indicar peligro */
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #photo-list .delete-btn:hover { background-color: #e74c3c; }
+
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .submit-btn:hover { background-color: #0088cc; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Panel de Administración</h1>
+            <a href="/logout" class="logout-btn">Cerrar Sesión</a>
+        </div>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="form-group"><label for="title">Título:</label><input type="text" id="title" name="title" required></div>
+            <div class="form-group"><label for="description">Descripción:</label><textarea id="description" name="description" required></textarea></div>
+            <div class="form-group"><label for="category">Categoría:</label><select id="category" name="category" required><option value="profundo">Espacio Profundo</option><option value="planetaria">Planetaria</option></select></div>
+            <div class="form-group"><label for="date">Fecha:</label><input type="date" id="date" name="date" required></div>
+            <div class="form-group"><label for="fullImage">Archivo de Imagen Principal:</label><input type="file" id="fullImage" name="fullImage" accept="image/*" required></div>
+                        <!-- ===== NUEVO BLOQUE PARA LA IMAGEN STARLESS ('DESPUÉS') ===== -->
+            <div class="form-group">
+                <label for="starlessImage">Archivo de Imagen Starless ('Después', Opcional):</label>
+                <input type="file" id="starlessImage" name="starlessImage" accept="image/*">
+                <small>Sube aquí la versión procesada (ej. sin estrellas) para el slider de comparación. Debe tener las mismas dimensiones que la imagen principal.</small>
+            </div>
+            <!-- ============================================================= -->
+            <div class="form-group"><label for="galleryFiles">Archivos Adicionales (Galería, máx. 10):</label><input type="file" id="galleryFiles" name="galleryFiles" accept="image/*,video/*" multiple></div>
+            
+            <div class="form-group">
+                <label>Ficha Técnica:</label>
+                <div class="tech-details-grid">
+                    <div class="tech-input"><label for="tech-telescopio">Telescopio:</label><input type="text" id="tech-telescopio" name="techDetails[Telescopio]"></div>
+                    <div class="tech-input"><label for="tech-camara">Cámara:</label><input type="text" id="tech-camara" name="techDetails[Camara]"></div>
+                    <div class="tech-input"><label for="tech-montura">Montura:</label><input type="text" id="tech-montura" name="techDetails[Montura]"></div>
+                    <div class="tech-input"><label for="tech-filtros">Filtros:</label><input type="text" id="tech-filtros" name="techDetails[Filtros]"></div>
+                    <div class="tech-input"><label for="tech-exposicion">Exposición:</label><input type="text" id="tech-exposicion" name="techDetails[Exposicion]"></div>
+                    <div class="tech-input"><label for="tech-flujo-procesado">Flujo de procesado:</label><input type="text" id="tech-flujo-procesado" name="techDetails[Flujo_de_procesado]"></div>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn">Subir Foto</button>
+        </form>
+    </div>
+
+    <!-- --- NUEVO: Sección para gestionar fotos existentes --- -->
+    <div class="admin-container manage-container">
+        <h2>Gestionar Fotos Existentes</h2>
+        <ul id="photo-list">
+            <!-- Las fotos se cargarán aquí dinámicamente -->
+        </ul>
+    </div>
+
+    <!-- --- NUEVO: Modal para editar foto --- -->
+    <div id="edit-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <button id="modal-close" class="modal-close-btn">×</button>
+            <h2>Editar Foto</h2>
+            <form id="edit-form">
+                <input type="hidden" id="edit-photo-id" name="photoId">
+                <div class="form-group"><label for="edit-title">Título:</label><input type="text" id="edit-title" name="title" required></div>
+                <div class="form-group"><label for="edit-description">Descripción:</label><textarea id="edit-description" name="description" required></textarea></div>
+                <div class="form-group"><label for="edit-category">Categoría:</label><select id="edit-category" name="category" required><option value="profundo">Espacio Profundo</option><option value="planetaria">Planetaria</option></select></div>
+                <div class="form-group"><label for="edit-date">Fecha:</label><input type="date" id="edit-date" name="date" required></div>
+                <div class="form-group">
+                    <label for="edit-fullImage">Reemplazar Imagen Principal (opcional):</label>
+                    <input type="file" id="edit-fullImage" name="fullImage" accept="image/*">
+                    <small>Deja este campo vacío para conservar la imagen actual.</small>
+                </div>
+                <div class="form-group">
+                    <label>Ficha Técnica:</label>
+                    <div id="edit-tech-details" class="tech-details-grid">
+                        <!-- Los campos se llenarán con JS, pero puedes predefinirlos como en el form principal -->
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const photoList = document.getElementById('photo-list');
+
+            function renderPhotos() {
+                photoList.innerHTML = ''; // Limpiar la lista antes de renderizar
+                if (typeof astroPhotos === 'undefined' || astroPhotos.length === 0) {
+                    photoList.innerHTML = '<li>No hay fotos para gestionar.</li>';
+                    return;
+                }
+
+                astroPhotos.sort((a, b) => b.id.localeCompare(a.id)).forEach(photo => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <span>${photo.title} (ID: ${photo.id})</span>
+                        <div class="action-buttons">
+                            <button class="edit-btn" data-id="${photo.id}">Editar</button>
+                            <button class="delete-btn" data-id="${photo.id}">Eliminar</button>
+                        </div>
+                    `;
+                    listItem.querySelector('.edit-btn').addEventListener('click', handleEdit);
+                    listItem.querySelector('.delete-btn').addEventListener('click', handleDelete);
+                    photoList.appendChild(listItem);
+                });
+            }
+
+            async function handleDelete(e) {
+                const photoId = e.target.dataset.id;
+                if (confirm(`¿Estás seguro de que quieres eliminar la foto con ID ${photoId}? Esta acción no se puede deshacer y borrará los archivos de imagen.`)) {
+                    const response = await fetch(`/delete/${photoId}`, { method: 'DELETE' });
+                    if (response.ok) {
+                        alert('Foto eliminada con éxito.');
+                        window.location.reload(); // Recargar para consistencia
+                    } else { alert('Error al eliminar la foto.'); }
+                }
+            }
+
+            // --- Lógica del Modal de Edición ---
+            const editModal = document.getElementById('edit-modal');
+            const editForm = document.getElementById('edit-form');
+            const closeModalBtn = document.getElementById('modal-close');
+            const techDetailsContainer = document.getElementById('edit-tech-details');
+
+            /**
+             * Función robusta para convertir una fecha en formato español (ej: "29 de agosto de 2023")
+             * a un objeto Date de JavaScript.
+             * @param {string} dateString - La fecha en formato de texto.
+             * @returns {Date|null} Un objeto Date o null si el formato es inválido.
+             */
+            function parseSpanishDate(dateString) {
+                if (!dateString) return null;
+                const months = {
+                    'enero': 0, 'febrero': 1, 'marzo': 2, 'abril': 3, 'mayo': 4, 'junio': 5,
+                    'julio': 6, 'agosto': 7, 'septiembre': 8, 'octubre': 9, 'noviembre': 10, 'diciembre': 11
+                };
+                const parts = dateString.toLowerCase().split(' de ');
+                if (parts.length !== 3) return null;
+                const day = parseInt(parts[0], 10);
+                const month = months[parts[1]];
+                const year = parseInt(parts[2], 10);
+                if (isNaN(day) || month === undefined || isNaN(year)) return null;
+                return new Date(year, month, day);
+            }
+            // CORRECCIÓN: Usar un mapa para separar la clave de datos (simple) de la etiqueta (con tildes).
+            const techFieldMap = {
+                'Telescopio': 'Telescopio',
+                'Camara': 'Cámara',
+                'Montura': 'Montura',
+                'Filtros': 'Filtros',
+                'Exposicion': 'Exposición',
+                'Flujo_de_procesado': 'Flujo de procesado'
+            };
+
+            function handleEdit(e) {
+                const photoId = e.target.dataset.id;
+                const photoData = astroPhotos.find(p => p.id === photoId);
+                if (!photoData) { return alert('Foto no encontrada.'); }
+
+                // Llenar el formulario
+                document.getElementById('edit-photo-id').value = photoData.id;
+                document.getElementById('edit-title').value = photoData.title;
+                document.getElementById('edit-description').value = photoData.description;
+                document.getElementById('edit-category').value = photoData.category;
+                
+                // CORRECCIÓN: Usar la función robusta para parsear la fecha en español.
+                // new Date() no entiende "29 de agosto de 2023" de forma fiable.
+                const date = parseSpanishDate(photoData.date);
+                if (date) {
+                    // Formatear a YYYY-MM-DD para el input type="date"
+                    document.getElementById('edit-date').value = date.toISOString().split('T')[0];
+                }
+
+                // Llenar dinámicamente la ficha técnica
+                techDetailsContainer.innerHTML = '';
+                const currentTechDetails = photoData.techDetails || {};
+                Object.entries(techFieldMap).forEach(([key, label]) => {
+                    // CORRECCIÓN: Escapar las comillas dobles en el valor para evitar romper el HTML del input.
+                    const rawValue = currentTechDetails[key] || '';
+                    const value = rawValue.replace(/"/g, '&quot;');
+                    const inputHTML = `
+                        <div class="tech-input">
+                            <label for="edit-tech-${key.toLowerCase()}">${label}:</label>
+                            <input type="text" id="edit-tech-${key.toLowerCase()}" name="techDetails[${key}]" value="${value}">
+                        </div>`;
+                    techDetailsContainer.innerHTML += inputHTML;
+                });
+
+                editModal.style.display = 'flex';
+            }
+
+            closeModalBtn.addEventListener('click', () => { editModal.style.display = 'none'; });
+
+            editForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const photoId = document.getElementById('edit-photo-id').value;
+                const formData = new FormData(editForm);
+
+                const response = await fetch(`/edit/${photoId}`, {
+                    method: 'POST', // Usamos POST para compatibilidad con multipart/form-data
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    alert('¡Foto actualizada con éxito!');
+                    window.location.reload(); // Recargamos para ver los cambios
+                } else {
+                    alert('Error al actualizar la foto.');
+                }
+            });
+
+            renderPhotos();
+        });
+    </script>
+</body>
+</html>

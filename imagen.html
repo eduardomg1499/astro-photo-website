@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Imagen - AstroDeepCoffe</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Librería para Pan & Zoom -->
+    <script src="https://cdn.jsdelivr.net/npm/panzoom@9.4.3/dist/panzoom.min.js"></script>
+        <!-- ===== AÑADIR LIBRERÍA DEL SLIDER DE COMPARACIÓN ===== -->
+    <link rel="stylesheet" href="https://unpkg.com/img-comparison-slider@8/dist/style.css" />
+    <script src="https://unpkg.com/img-comparison-slider@8/dist/index.js" defer></script>
+    <!-- ====================================================== -->
+</head>
+<body>
+
+    <header class="main-header">
+        <nav>
+            <a href="index.html" class="logo">AstroDeepCoffe</a>
+            <ul>
+                <li><a href="galeria.html?tipo=profundo">Espacio Profundo</a></li>
+                <li><a href="galeria.html?tipo=planetaria">Planetaria</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- El wrapper principal sigue siendo el mismo, pero el JS generará una estructura diferente dentro -->
+    <main id="image-detail-wrapper" class="container">
+        <!-- El contenido se cargará aquí con JavaScript -->
+    </main>
+
+    <!-- MODAL (sin cambios) -->
+    <div id="fullscreen-modal" class="fullscreen-modal">
+        <div class="content">
+            <button class="close-btn" id="modal-close-btn">×</button>
+            <img id="fullscreen-image" src="" alt="Vista en pantalla completa">
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 AstroDeepCoffe. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
